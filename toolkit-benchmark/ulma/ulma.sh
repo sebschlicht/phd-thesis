@@ -41,6 +41,7 @@ function parseArguments {
   CDISCOUNT=0
   SOS=false
   EOS=false
+  UNK=false
   SOURCED=$( [ -z $ULMA_TOOLKIT ] )
   
   while [[ $# > 0 ]]
@@ -75,14 +76,18 @@ function parseArguments {
       CDISCOUNT="$2"
       shift
       ;;
-      -i|--interpolation)
       ## switch from backoff to interpolation
+      -i|--interpolation)
       SMOOTHING=INTERPOLATION
       ;;
-      -seos|--start-end-of-sentence)
       ## enable start-/end-of-sentence tags
+      -seos|--start-end-of-sentence)
       SOS=true
       EOS=true
+      ;;
+      # unknown words
+      -unk|--unknown-words)
+      UNK=true
       ;;
       # unknown option
       -*)

@@ -125,6 +125,7 @@ function get_model_name {
   local ESTIMATOR=mle
   local INTERPOLATE=false
   local CDISCOUNT=0
+  local UNK=false
   local SEOS=false
   while [[ $# > 0 ]]; do
     key="$1"
@@ -146,6 +147,10 @@ function get_model_name {
         CDISCOUNT="$2"
         shift
         ;;
+      # unknown words
+      -unk)
+        UNK=true
+        ;;
       # start-/end-of-sentence tokens
       -seos)
         SEOS=true
@@ -160,6 +165,9 @@ function get_model_name {
   fi
   if [ ! "$CDISCOUNT" = "0" ]; then
     FILENAME="$FILENAME"_cdis-"$CDISCOUNT"
+  fi
+  if $UNK; then
+    FILENAME="$FILENAME"_unk
   fi
   if $SEOS; then
     FILENAME="$FILENAME"_seos
@@ -186,19 +194,35 @@ function add_models {
   add_model kylm -seos -i -mkn
   # SRILM
   ## non-seos
+  ### non-unk
   add_model srilm
   add_model srilm -cdiscount 0.75 -i
   add_model srilm -kn
   add_model srilm -cdiscount 0.75 -kn -i
   add_model srilm -i -kn
   add_model srilm -i -mkn
+  ### with unk
+  add_model srilm -unk
+  add_model srilm -cdiscount 0.75 -i -unk
+  add_model srilm -kn -unk
+  add_model srilm -cdiscount 0.75 -kn -i -unk
+  add_model srilm -i -kn -unk
+  add_model srilm -i -mkn -unk
   ## with seos
+  ### non-unk
   add_model srilm -seos
   add_model srilm -seos -cdiscount 0.75 -i
   add_model srilm -seos -kn
   add_model srilm -seos -cdiscount 0.75 -kn -i
   add_model srilm -seos -i -kn
   add_model srilm -seos -i -mkn
+  ### with unk
+  add_model srilm -seos -unk
+  add_model srilm -seos -cdiscount 0.75 -i -unk
+  add_model srilm -seos -kn -unk
+  add_model srilm -seos -cdiscount 0.75 -kn -i -unk
+  add_model srilm -seos -i -kn -unk
+  add_model srilm -seos -i -mkn -unk
 }
 
 # Creates the language models that are missing.

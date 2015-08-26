@@ -49,6 +49,12 @@ function lmplz {
     exit 100
   fi
   
+  # unknown words
+  if $UNK; then
+    print_error 'Unknown words are not implemented for KyLM yet.'
+    exit 100
+  fi
+  
   # interpolation
   if [ "$SMOOTHING" != "INTERPOLATION" ]; then
     # TODO: or doesn't it support interploation?

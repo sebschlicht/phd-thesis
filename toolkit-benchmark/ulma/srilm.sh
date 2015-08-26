@@ -54,6 +54,11 @@ function lmplz {
       ;;
   esac
   
+  # unknown words
+  if $UNK; then
+    OPT_NGRAM_COUNT="$OPT_NGRAM_COUNT"' -unk'
+  fi
+  
   # interpolation
   if [ "$SMOOTHING" == "INTERPOLATION" ]; then
     OPT_NGRAM_COUNT="$OPT_NGRAM_COUNT"' -interpolate'

@@ -46,6 +46,12 @@ function lmplz {
     exit 100
   fi
   
+  # unknown words
+  if $UNK; then
+    print_error 'Unknown words are not implemented for KenLM yet.'
+    exit 100
+  fi
+  
   # don't interploate unigrams (default in SRILM)
   OPT_LMPLZ="$OPT_LMPLZ"' --interpolate_unigrams 0'
   
