@@ -391,7 +391,7 @@ function kenlm_sump {
   local COLUMN=6
   let COLUMN=COLUMN+"$ORDER"
   
-  local SUMP=$( head -n -7 "$RESULT" | awk '{p=p+($'"$COLUMN"')} END{print p}' )
+  local SUMP=$( head -n -7 "$RESULT" | awk '{p=p+(10 ^ $'"$COLUMN"')} END{print p}' )
   echo "$SUMP"
 }
 
@@ -408,7 +408,6 @@ function add_table_line {
 
 # Generates an overview table using the query result files.
 function create_table {
-  #TODO unk
   local TABLE="$1"
   
   local LAST_TOOL=
