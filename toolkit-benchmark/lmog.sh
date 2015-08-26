@@ -113,9 +113,12 @@ function handleParameter {
 # Uses SRILM to create the corpus' vocabulary for the given order.
 function create_vocab {
   #TODO remove pause tags '-pau-', disable unknown words (and seos?)
-  "$SRILM"/ngram-count -order "$ORDER" -write-vocab "$VOCAB_FILE" -text "$CORPUS"
-  grep -v -e '-pau-' "$VOCAB_FILE" > "$VOCAB_FILE".tmp
-  mv "$VOCAB_FILE".tmp "$VOCAB_FILE"
+  "$SRILM"/ngram-count -order "$ORDER" -write-vocab "$VOCAB_FILE".tmp -text "$CORPUS"
+  grep -v -e '-pau-' "$VOCAB_FILE".tmp > "$VOCAB_FILE"
+  grep -v -e '<unk>' "$VOCAB_FILE" > "$VOCAB_FILE_SEOS"
+  grep -v -e '<s>' -e '</s>' "$VOCAB_FILE" > "$VOCAB_FILE_UNK"
+  grep -v -e '<unk>' -e '<s>' -e '</s>' "$VOCAB_FILE" > "$VOCAB_FILE_CLEAN"
+  #TODO generate vocabulary with unknown words
 }
 
 # Generates the model name depending on the parameters used to create it.
@@ -477,6 +480,10 @@ DIR_LM="$DIR"/lm
 DIR_QREQ="$DIR"/query/request
 DIR_QRES="$DIR"/query/result
 VOCAB_FILE="$DIR"/vocabulary.txt
+VOCAB_FILE_SEOS="$DIR"/vocabulary-seos-tags.txt
+VOCAB_FILE_UNK="$DIR"/vocabulary-unk-tags.txt
+VOCAB_FILE_CLEAN="$DIR"/vocabulary-clean.txt
+VOCAB_FILE_OOV="$DIR"/vocabulary-oov.txt
 TABLE_FILE="$DIR"/table-"$ORDER".md
 
 QRY_KENLM="$DIR_QREQ"/kenlm-"$ORDER".txt
