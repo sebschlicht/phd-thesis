@@ -115,6 +115,7 @@ function create_vocab {
   #TODO remove pause tags '-pau-', disable unknown words (and seos?)
   "$SRILM"/ngram-count -order "$ORDER" -write-vocab "$VOCAB_FILE".tmp -text "$CORPUS"
   grep -v -e '-pau-' "$VOCAB_FILE".tmp > "$VOCAB_FILE"
+  rm "$VOCAB_FILE".tmp
   grep -v -e '<unk>' "$VOCAB_FILE" > "$VOCAB_FILE_SEOS"
   grep -v -e '<s>' -e '</s>' "$VOCAB_FILE" > "$VOCAB_FILE_UNK"
   grep -v -e '<unk>' -e '<s>' -e '</s>' "$VOCAB_FILE" > "$VOCAB_FILE_CLEAN"
