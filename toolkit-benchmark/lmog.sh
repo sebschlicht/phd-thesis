@@ -279,11 +279,11 @@ function add_model {
 # Add new language models by adding an entry using the tool and the parameters here!
 function add_models {
   # KenLM
-  add_model kenlm -i -mkn
+  #add_model kenlm -i -mkn
   # KyLM
-  add_model kylm -seos -i 
-  add_model kylm -seos -i -kn
-  add_model kylm -seos -i -mkn
+  #add_model kylm -seos -i 
+  #add_model kylm -seos -i -kn
+  #add_model kylm -seos -i -mkn
   # SRILM
   ## non-seos
   ### non-unk
@@ -401,11 +401,11 @@ function create_query_files {
   local CRR="$WORKING_DIR"/kenlm-query
   local NEXT="$TMP".tmp
   if [ ! -z "$SUFFIX" ]; then
-    QRY_KENLM="$DIR_QREQ"/kenlm_"${SUFFIX::-1}".txt
-    QRY_SRILM="$DIR_QREQ"/srilm_"${SUFFIX::-1}".txt
+    QRY_KENLM="$DIR_QREQ"/kenlm_"${SUFFIX::-1}"-"$ORDER".txt
+    QRY_SRILM="$DIR_QREQ"/srilm_"${SUFFIX::-1}"-"$ORDER".txt
   else
-    QRY_KENLM="$DIR_QREQ"/kenlm.txt
-    QRY_SRILM="$DIR_QREQ"/srilm.txt
+    QRY_KENLM="$DIR_QREQ"/kenlm-"$ORDER".txt
+    QRY_SRILM="$DIR_QREQ"/srilm-"$ORDER".txt
   fi
   echo "QRY_KENLM: $QRY_KENLM"
   echo "QRY_SRILM: $QRY_SRILM"
