@@ -475,7 +475,8 @@ function query_srilm {
   local MODEL="$1"
   local RESULT="$2"
   
-  "$SRILM"/ngram -lm "$MODEL" -counts "$QRY_SRILM" -debug 2 > "$RESULT"
+  #"$SRILM"/ngram -lm "$MODEL" -counts "$QRY_SRILM" -debug 2 > "$RESULT"
+  "$SRILM"/ngram -lm "$MODEL" -ppl "$QRY_KENLM" -debug 2 > "$RESULT"
 }
 
 # Queries all the language models with all query setting combinations.

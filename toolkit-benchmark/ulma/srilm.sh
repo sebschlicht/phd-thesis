@@ -36,8 +36,13 @@ function lmplz {
   # smoothing method
   case $SMOOTHING_METHOD in
     KN)
-      # TODO
-      OPT_NGRAM_COUNT="$OPT_NGRAM_COUNT"' -ukndiscount'
+      if [ "$CDISCOUNT" = "0" ]; then
+        # let SRILM calculate discount values
+        OPT_NGRAM_COUNT="$OPT_NGRAM_COUNT"' -ukndiscount'
+      else
+        # use absolute discount values
+        OPT_NGRAM_COUNT="$OPT_NGRAM_COUNT"' -ukndiscount '"$CDISCOUNT"
+      fi
       ;;
     MKN)
       if [ "$CDISCOUNT" = "0" ]; then
